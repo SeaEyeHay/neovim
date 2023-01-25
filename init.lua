@@ -22,6 +22,18 @@ require "plugins"
 -- Custom keybindings
 require "bindings"
 
+--[[----------------------------------------------------------
+																								User Commands
+--]]----------------------------------------------------------
+local add_cmd = vim.api.nvim_create_user_command
+
+add_cmd("RC", function()
+				local confPath = os.getenv 'MYVIMRC'
+
+				vim.cmd('cd ' .. confPath)
+				vim.cmd('e ' .. confPath .. '/init.lua')
+end , {nargs = 0})
+
 
 --[[----------------------------------------------------------
 																								Defaults Settings

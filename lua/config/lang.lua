@@ -16,7 +16,17 @@ function configs.lua()
 								settings = {
 												Lua = {
 																runtime = {
-																				version = 'LuaJIT',
+																				version = 'Lua 5.3',
+																				path = {
+																								'?.lua',
+        																'?/init.lua',
+        																vim.fn.expand'~/.luarocks/share/lua/5.3/?.lua',
+        																vim.fn.expand'~/.luarocks/share/lua/5.3/?/init.lua',
+        																'/usr/share/5.3/?.lua',
+        																'/usr/share/lua/5.3/?/init.lua',
+																								'/usr/share/awesome/lib/?.lua',
+																								'/usr/share/awesome/lib/?/init.lua'
+																				}
 																},
 
 																diagnostics = {

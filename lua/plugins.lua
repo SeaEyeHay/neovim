@@ -110,6 +110,11 @@ local function plugins(use)
 								config = function () require('config.lang').highlight() end
 				}
 
+				use {
+								'norcalli/nvim-colorizer.lua',
+								config = function() require('colorizer').setup() end
+				}
+
 
 				--[[------------------------------------------
 																Quality of life stuff
