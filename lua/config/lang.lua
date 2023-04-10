@@ -10,9 +10,9 @@ local cmp = require 'cmp'
 local configs = {}
 
 function configs.lua()
-			 lsp.sumneko_lua.setup {
+			 lsp.lua_ls.setup {
 								capabilities = capabilities,
-								root_dir = lsp.util.root_pattern('main.lua', 'init.lua', '.git'),
+								root_dir = lsp.util.root_pattern('.luarc.json', 'init.lua', '.git'),
 								settings = {
 												Lua = {
 																runtime = {
@@ -24,8 +24,6 @@ function configs.lua()
         																vim.fn.expand'~/.luarocks/share/lua/5.3/?/init.lua',
         																'/usr/share/5.3/?.lua',
         																'/usr/share/lua/5.3/?/init.lua',
-																								'/usr/share/awesome/lib/?.lua',
-																								'/usr/share/awesome/lib/?/init.lua'
 																				}
 																},
 
@@ -35,7 +33,6 @@ function configs.lua()
 																},
 
 																workspace = {
-																				-- Make the server aware of Neovim runtime files
 																				library = vim.api.nvim_get_runtime_file("", true),
 																},
 
@@ -51,6 +48,36 @@ function configs.c()
 								capabilities = capabilities,
 								root_dir = lsp.util.root_pattern('CMakeLists.txt', 'compile_commands.json')
 				}
+end
+
+function configs.rust()
+				local nvim_lsp = require'lspconfig'
+
+				local on_attach = function(client)
+				    require'completion'.on_attach(client)
+				end
+
+				nvim_lsp.rust_analyzer.setup({
+				    on_attach=on_attach,
+				    settings = {
+				        ["rust-analyzer"] = {
+				            imports = {
+				                granularity = {
+				                    group = "module",
+				                },
+				                prefix = "self",
+				            },
+				            cargo = {
+				                buildScripts = {
+				                    enable = true,
+				                },
+				            },
+				            procMacro = {
+				                enable = true
+				            },
+				        }
+				    }
+				})
 end
 
 

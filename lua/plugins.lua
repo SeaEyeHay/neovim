@@ -13,6 +13,26 @@ local function plugins(use)
 				--[[-------------------------------------------
 																Linting and Completions
 				--]]-------------------------------------------
+				use {
+								'simrat39/rust-tools.nvim',
+								requires = 'neovim/nvim-lspconfig',
+
+								config = function()
+												local rt = require("rust-tools")
+
+												rt.setup({
+												  server = {
+												    on_attach = function(_, bufnr)
+												      -- Hover actions
+												      vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
+												      -- Code action groups
+												      vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+												    end,
+												  },
+												})
+								end
+				}
+
 				-- Completion Engine
 				use 'hrsh7th/cmp-nvim-lsp'
 				use 'hrsh7th/cmp-buffer'
@@ -23,10 +43,11 @@ local function plugins(use)
 				use 'hrsh7th/cmp-vsnip'
 				use 'hrsh7th/vim-vsnip'
 
+
+    use 'williamboman/mason-lspconfig.nvim'
 				use {
 								'neovim/nvim-lspconfig',
-								requires = 'hrsh7th/nvim-cmp',
-
+								requires =  'hrsh7th/nvim-cmp',
 								config = function()
 												local configs = require 'config.lang'
 
@@ -44,6 +65,11 @@ local function plugins(use)
 								},
 
 								config = function() require("config.lang").cmp() end
+				}
+
+				use {
+								'williamboman/mason.nvim',
+								config = function() require("mason").setup() end,
 				}
 
 
